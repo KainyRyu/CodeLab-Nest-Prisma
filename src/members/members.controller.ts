@@ -51,7 +51,6 @@ export class MembersController {
 
   @Delete(':id')
   remove(@Param('id') id: number) {
-    const selected = this.membersService.findOne(id);
     return this.membersService.remove(id);
   }
 }

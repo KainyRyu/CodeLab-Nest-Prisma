@@ -24,3 +24,24 @@ model Profile {
   member   Member @relation(fields: [memberId], references: [id])
   memberId Int // FK. foreign key
 }
+
+
+// 03 - 1:N relation ----------------------------------------
+// User - Post
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+  posts Post[]
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  // CHECK: when author and authorId optional
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int // FK
+}
