@@ -35,9 +35,13 @@ export class MembersService {
   }
 
   async remove(id: number) {
-    const deleteProfile = await this.prisma.profile.deleteMany({
+    const deleteProfile = this.prisma.profile.deleteMany({
       where: { memberId: id },
     });
-    const deleteMember = await this.prisma.member.delete({ where: { id } });
+    const deleteMember = this.prisma.member.delete({ where: { id } });
+    const transaction = await this.prisma.$transaction([
+      deleteProfile,
+      deleteMember,
+    ]);
   }
 }
