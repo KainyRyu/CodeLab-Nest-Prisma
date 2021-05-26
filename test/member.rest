@@ -1,0 +1,143 @@
+### GET list ------------------------------------------------------------
+
+### GET all members
+GET http://localhost:3000/members HTTP/1.1
+
+
+
+
+### GET all: 001101harry
+GET http://localhost:3000/001101harry/members HTTP/1.1
+
+### GET all: wrong user but OK
+GET http://localhost:3000/__NOT_EXIST_USER__/members HTTP/1.1
+
+
+### GET item ------------------------------------------------------------
+
+### GET a single item
+GET http://localhost:3000/members/1 HTTP/1.1
+
+
+
+
+
+### GET item: wrong owner
+GET http://localhost:3000/__NOT_EXIST_USER__/members/1 HTTP/1.1
+
+
+### POST ------------------------------------------------------------
+
+### POST owner: 0000gaja
+POST http://localhost:3000/members HTTP/1.1
+content-type: application/json
+
+{
+  "name" : "joel",
+  "email" : "joel123@joara.com",
+  "nickname": "joel33"
+}
+
+### POST 
+POST http://localhost:3000/members HTTP/1.1
+content-type: application/json
+
+{
+  "name": "joel",
+  "email": "joel123@joara.com",
+  "nickname": "joel33",
+  "bio": "a good person"
+}
+
+
+### Profile ----------------------------------------
+POST http://localhost:3000/members/2 HTTP/1.1
+content-type: application/json
+
+{
+  "bio": "a good student"
+}
+
+### POST owner: 001101harry
+POST http://localhost:3000/001101harry/members HTTP/1.1
+content-type: application/json
+
+{
+  "title": "추천작 리스트 테스트 by 001101harry",
+  "description": "추천작 리스트 테스트입니다  by 001101harry",
+  "isPublic": false,
+  "books": [9, 5, 3, 7]
+}
+
+### POST error: missing info
+POST http://localhost:3000/members HTTP/1.1
+content-type: application/json
+
+{
+  "title": "정보 부족",
+  "isPublic": false,
+  "books": [1, 3, 5, 7]
+}
+
+### POST error: wrong type
+POST http://localhost:3000/members HTTP/1.1
+content-type: application/json
+
+{
+  "title": "잘못된 타입",
+  "description": "추천작 리스트 테스트입니다.",
+  "isPublic": "wrong type",
+  "books": "wrong type"
+}
+
+
+### PATCH ------------------------------------------------------------
+
+### PATCH member
+PATCH http://localhost:3000/members/13 HTTP/1.1
+content-type: application/json
+
+{
+  "name" : "joel",
+  "bio" : "food"
+}
+
+### PATCH member
+PATCH http://localhost:3000/members/14 HTTP/1.1
+content-type: application/json
+
+{
+  "bio" : "food"
+}
+
+### PATCH profile
+PATCH http://localhost:3000/members/10 HTTP/1.1
+content-type: application/json
+
+{
+  "nickname" : "bye"
+}
+
+### PATCH books
+PATCH http://localhost:3000/members/2 HTTP/1.1
+content-type: application/json
+
+{
+  "title": "추천작 리스트 테스트 북 수정됨",
+  "books": [1, 3]
+}
+
+### PATCH error
+PATCH http://localhost:3000/members/2 HTTP/1.1
+content-type: application/json
+
+{
+  "title": "잘못된 타입",
+  "isPublic": 0,
+  "books": "wrong type"
+}
+
+### DELETE ------------------------------------------------------------
+
+### DELETE item
+DELETE http://localhost:3000/members/12 HTTP/1.1

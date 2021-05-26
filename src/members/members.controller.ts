@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MembersService } from './members.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { Prisma } from '.prisma/client';
 
 @Controller('members')
 export class MembersController {
@@ -9,7 +18,13 @@ export class MembersController {
 
   @Post()
   create(@Body() createMemberDto: CreateMemberDto) {
-    return this.membersService.create(createMemberDto);
+    const { name, email, nickname, bio } = createMemberDto;
+    return this.membersService.create({
+      name,
+      email,
+      nickname,
+      profile: { create: { bio } },
+    });
   }
 
   @Get()
@@ -23,12 +38,20 @@ export class MembersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-    return this.membersService.update(+id, updateMemberDto);
+  update(@Param('id') id: number, @Body() updateMemberDto: UpdateMemberDto) {
+    const { name, email, nickname, bio } = updateMemberDto;
+    const data = {
+      name,
+      email,
+      nickname,
+      profile: { update: { bio } },
+    };
+    return this.membersService.update(id, data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.membersService.remove(+id);
+  remove(@Param('id') id: number) {
+    const selected = this.membersService.findOne(id);
+    return this.membersService.remove(id);
   }
 }
