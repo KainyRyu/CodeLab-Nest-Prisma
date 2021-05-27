@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTagDto } from './dto/create-tag.dto';
-import { UpdateTagDto } from './dto/update-tag.dto';
+import { PrismaService } from '../prisma.service';
+import { Prisma } from '.prisma/client';
 
 @Injectable()
 export class TagsService {
-  create(createTagDto: CreateTagDto) {
+  constructor(private readonly prisma: PrismaService) {}
+
+  create(createTagDto: Prisma.TagCreateInput) {
     return 'This action adds a new tag';
   }
 
@@ -16,7 +18,7 @@ export class TagsService {
     return `This action returns a #${id} tag`;
   }
 
-  update(id: number, updateTagDto: UpdateTagDto) {
+  update(id: number, updateTagDto: Prisma.TagUpdateInput) {
     return `This action updates a #${id} tag`;
   }
 

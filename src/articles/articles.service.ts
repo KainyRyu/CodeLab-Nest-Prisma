@@ -1,13 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
 import { PrismaService } from '../prisma.service';
+import { Prisma } from '.prisma/client';
 
 @Injectable()
 export class ArticlesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createArticleDto: CreateArticleDto) {
+  create(data: Prisma.ArticleCreateInput) {
     return 'This action adds a new article';
   }
 
@@ -22,7 +21,7 @@ export class ArticlesService {
     });
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
+  update(id: number, data: Prisma.ArticleUpdateInput) {
     return `This action updates a #${id} article`;
   }
 
