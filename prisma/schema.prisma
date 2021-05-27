@@ -62,3 +62,30 @@ model Tag {
   label    String    @unique
   articles Article[]
 }
+
+// // 05 - M:N explicit relation ----------------------------------------
+// Book - Booklist
+model Booklist {
+  id            Int                @id @default(autoincrement())
+  label         String
+  booklistLinks BooklistBookLink[]
+}
+
+model Book {
+  id        Int                @id @default(autoincrement())
+  title     String
+  isbn      String?
+  bookLinks BooklistBookLink[]
+}
+
+model BooklistBookLink {
+  book            Book     @relation(fields: [bookId], references: [id])
+  bookId          Int
+  booklist        Booklist @relation(fields: [booklistId], references: [id])
+  booklistId      Int
+  // additional infos
+  createdAt       DateTime @default(now())
+  orderInBooklist Int      @default(0)
+
+  @@id([bookId, booklistId])
+}

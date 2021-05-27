@@ -1,0 +1,57 @@
+### GET list ------------------------------------------------------------
+
+### GET all booklists
+GET http://localhost:3000/booklists HTTP/1.1
+
+
+
+### GET all books
+GET http://localhost:3000/booklists/books HTTP/1.1
+
+
+
+### GET item ------------------------------------------------------------
+
+### GET a single item
+GET http://localhost:3000/booklists/1 HTTP/1.1
+
+
+
+### GET a single tag
+GET http://localhost:3000/booklists/books/8 HTTP/1.1
+
+
+
+### POST ------------------------------------------------------------
+
+### POST post
+POST http://localhost:3000/booklists/ HTTP/1.1
+content-type: application/json
+
+{
+  "title": "How to be a vegan",
+  "content": "Hello world!",
+  "tags": ["f","b","c"]
+}
+
+
+
+
+### PATCH ------------------------------------------------------------
+
+### PATCH member
+PATCH http://localhost:3000/booklists/1 HTTP/1.1
+content-type: application/json
+
+{
+  "tags": ["f","2","c"]
+}
+
+
+### DELETE ------------------------------------------------------------
+
+### DELETE item
+DELETE http://localhost:3000/booklists/5 HTTP/1.1
+
+### DELETE tags
+DELETE http://localhost:3000/tags/8 HTTP/1.1
