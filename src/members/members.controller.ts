@@ -10,6 +10,7 @@ import {
 import { MembersService } from './members.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
+import { Prisma } from '.prisma/client';
 
 @Controller('members')
 export class MembersController {
@@ -50,6 +51,7 @@ export class MembersController {
 
   @Delete(':id')
   remove(@Param('id') id: number) {
+    const selected = this.membersService.findOne(id);
     return this.membersService.remove(id);
   }
 }

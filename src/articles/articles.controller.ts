@@ -43,8 +43,16 @@ export class ArticlesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
-    return this.articleService.update(+id, updateArticleDto);
+  update(@Param('id') id: number, @Body() updateArticleDto: UpdateArticleDto) {
+    const connectOrCreate = updateArticleDto.tags?.map((tag) => ({
+      where: { label: tag },
+      create: { label: tag },
+    }));
+    const data: Prisma.ArticleUpdateInput = {
+      ...updateArticleDto,
+      tags: { set: [], connectOrCreate },
+    };
+    return this.articleService.update(id, data);
   }
 
   @Delete(':id')
