@@ -140,4 +140,4 @@ content-type: application/json
 ### DELETE ------------------------------------------------------------
 
 ### DELETE item
-DELETE http://localhost:3000/members/12 HTTP/1.1
+DELETE http://localhost:3000/members/4 HTTP/1.1

@@ -11,31 +11,34 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
-@Controller('posts')
+@Controller()
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
-  @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  @Post(':uid/posts')
+  create(@Param('uid') uid: number, @Body() createPostDto: CreatePostDto) {
+    return this.postsService.create({
+      ...createPostDto,
+      author: { connect: { id: uid } },
+    });
   }
 
-  @Get()
+  @Get('posts')
   findAll() {
     return this.postsService.findAll();
   }
 
-  @Get(':id')
+  @Get('posts/:id')
   findOne(@Param('id') id: number) {
     return this.postsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('posts/:id')
   update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
     return this.postsService.update(id, updatePostDto);
   }
 
-  @Delete(':id')
+  @Delete('posts/:id')
   remove(@Param('id') id: number) {
     return this.postsService.remove(id);
   }

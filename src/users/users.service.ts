@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
@@ -30,7 +29,12 @@ export class UsersService {
     });
   }
 
-  remove(id: number) {
-    return this.prisma.user.delete({ where: { id } });
+  async remove(id: number) {
+    const deletedPosts = this.prisma.post.deleteMany({ where: { id } });
+    const deletedUser = this.prisma.user.delete({ where: { id } });
+    const transaction = await this.prisma.$transaction([
+      deletedPosts,
+      deletedUser,
+    ]);
   }
 }
