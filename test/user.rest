@@ -62,7 +62,7 @@ content-type: application/json
 ### DELETE ------------------------------------------------------------
 
 ### DELETE item
-DELETE http://localhost:3000/users/2 HTTP/1.1
+DELETE http://localhost:3000/users/6 HTTP/1.1
 
 ### DELETE posts
 DELETE http://localhost:3000/posts/9 HTTP/1.1

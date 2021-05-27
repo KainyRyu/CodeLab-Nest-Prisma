@@ -30,11 +30,14 @@ export class UsersService {
   }
 
   async remove(id: number) {
-    const deletedPosts = this.prisma.post.deleteMany({ where: { id } });
+    const deletedPosts = this.prisma.post.deleteMany({
+      where: { authorId: id },
+    });
     const deletedUser = this.prisma.user.delete({ where: { id } });
     const transaction = await this.prisma.$transaction([
       deletedPosts,
       deletedUser,
     ]);
+    return { status: 1, transaction };
   }
 }
