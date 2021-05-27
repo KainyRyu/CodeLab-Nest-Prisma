@@ -10,7 +10,6 @@ import {
 import { MembersService } from './members.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
-import { Prisma } from '.prisma/client';
 
 @Controller('members')
 export class MembersController {
