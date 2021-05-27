@@ -1,0 +1,51 @@
+### GET list ------------------------------------------------------------
+
+### GET all articles
+GET http://localhost:3000/articles HTTP/1.1
+
+
+
+### GET all tags
+GET http://localhost:3000/tags HTTP/1.1
+
+
+
+### GET item ------------------------------------------------------------
+
+### GET a single item
+GET http://localhost:3000/articles/1 HTTP/1.1
+
+
+
+### POST ------------------------------------------------------------
+
+### POST post
+POST http://localhost:3000/articles/ HTTP/1.1
+content-type: application/json
+
+{
+  "title": "How to be a vegan",
+  "content": "Hello world!"
+}
+
+
+
+
+### PATCH ------------------------------------------------------------
+
+### PATCH member
+PATCH http://localhost:3000/articles/2 HTTP/1.1
+content-type: application/json
+
+{
+  "name" : "joel"
+}
+
+
+### DELETE ------------------------------------------------------------
+
+### DELETE item
+DELETE http://localhost:3000/articles/6 HTTP/1.1
+
+### DELETE tags
+DELETE http://localhost:3000/tags/ HTTP/1.1
