@@ -7,7 +7,7 @@ export class ArticlesService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(data: Prisma.ArticleCreateInput) {
-    return 'This action adds a new article';
+    return this.prisma.article.create({ data, include: { tags: true } });
   }
 
   findAll() {
@@ -22,7 +22,11 @@ export class ArticlesService {
   }
 
   update(id: number, data: Prisma.ArticleUpdateInput) {
-    return `This action updates a #${id} article`;
+    return this.prisma.article.update({
+      where: { id },
+      data,
+      include: { tags: true },
+    });
   }
 
   async remove(id: number) {

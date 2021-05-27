@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { Prisma } from '.prisma/client';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -17,7 +18,18 @@ export class ArticlesController {
 
   @Post()
   create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articleService.create(createArticleDto);
+    const { title, content, tags } = createArticleDto;
+    const connectOrCreate = tags.map((tag) => ({
+      where: { label: tag },
+      create: { label: tag },
+    }));
+    const data: Prisma.ArticleCreateInput = {
+      title,
+      content,
+      tags: { connectOrCreate },
+    };
+
+    return this.articleService.create(data);
   }
 
   @Get()
@@ -26,8 +38,8 @@ export class ArticlesController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.articleService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.articleService.findOne(id);
   }
 
   @Patch(':id')
@@ -36,7 +48,7 @@ export class ArticlesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.articleService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.articleService.remove(id);
   }
 }

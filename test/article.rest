@@ -25,7 +25,8 @@ content-type: application/json
 
 {
   "title": "How to be a vegan",
-  "content": "Hello world!"
+  "content": "Hello world!",
+  "tags": ["a","b","c"]
 }
 
 
