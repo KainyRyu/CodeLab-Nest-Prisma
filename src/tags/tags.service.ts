@@ -6,23 +6,18 @@ import { Prisma } from '.prisma/client';
 export class TagsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createTagDto: Prisma.TagCreateInput) {
-    return 'This action adds a new tag';
-  }
-
   findAll() {
-    return `This action returns all tags`;
+    return this.prisma.tag.findMany({ include: { articles: true } });
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} tag`;
-  }
-
-  update(id: number, updateTagDto: Prisma.TagUpdateInput) {
-    return `This action updates a #${id} tag`;
+    return this.prisma.tag.findUnique({
+      where: { id },
+      include: { articles: true },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} tag`;
+    return this.prisma.tag.delete({ where: { id } });
   }
 }

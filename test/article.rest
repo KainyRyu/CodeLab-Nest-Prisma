@@ -17,6 +17,11 @@ GET http://localhost:3000/articles/1 HTTP/1.1
 
 
 
+### GET a single tag
+GET http://localhost:3000/tags/8 HTTP/1.1
+
+
+
 ### POST ------------------------------------------------------------
 
 ### POST post
@@ -46,7 +51,7 @@ content-type: application/json
 ### DELETE ------------------------------------------------------------
 
 ### DELETE item
-DELETE http://localhost:3000/articles/6 HTTP/1.1
+DELETE http://localhost:3000/articles/5 HTTP/1.1
 
 ### DELETE tags
-DELETE http://localhost:3000/tags/ HTTP/1.1
+DELETE http://localhost:3000/tags/8 HTTP/1.1
