@@ -43,17 +43,29 @@ export class PostsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.postsService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.postsService.findOne(id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-  //   return this.postsService.update(+id, updatePostDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto) {
+    const create = updatePostDto.tags?.map((tag) => ({
+      tag: {
+        connectOrCreate: {
+          create: { name: tag },
+          where: { name: tag },
+        },
+      },
+    }));
+    const data: Prisma.PostUpdateInput = {
+      ...updatePostDto,
+      tags: { set: [], create },
+    };
+    return this.postsService.update(id, data);
+  }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.postsService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.postsService.remove(id);
   }
 }

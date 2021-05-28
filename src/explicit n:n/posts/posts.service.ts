@@ -27,6 +27,6 @@ export class PostsService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} post`;
+    return this.prisma.post.delete({ where: { id }, include: { tags: true } });
   }
 }
