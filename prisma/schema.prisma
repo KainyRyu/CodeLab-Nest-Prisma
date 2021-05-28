@@ -10,82 +10,102 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Member {
-  id       Int      @id @default(autoincrement())
-  name     String
-  email    String   @unique
-  nickname String?
-  profile  Profile?
-}
+// model Member {
+//   id       Int      @id @default(autoincrement())
+//   name     String
+//   email    String   @unique
+//   nickname String?
+//   profile  Profile?
+// }
 
-model Profile {
-  id       Int    @id @default(autoincrement())
-  bio      String
-  member   Member @relation(fields: [memberId], references: [id])
-  memberId Int // FK. foreign key
-}
+// model Profile {
+//   id       Int    @id @default(autoincrement())
+//   bio      String
+//   member   Member @relation(fields: [memberId], references: [id])
+//   memberId Int // FK. foreign key
+// }
 
 // 03 - 1:N relation ----------------------------------------
 // User - Post
-model User {
-  id    Int    @id @default(autoincrement())
-  name  String
-  email String @unique
-  posts Post[]
-}
+// model User {
+//   id    Int    @id @default(autoincrement())
+//   name  String
+//   email String @unique
+//   posts Post[]
+// }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  // CHECK: when author and authorId optional
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int // FK
-}
+// model Post {
+//   id        Int      @id @default(autoincrement())
+//   title     String
+//   content   String?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+//   // CHECK: when author and authorId optional
+//   author    User     @relation(fields: [authorId], references: [id])
+//   authorId  Int // FK
+// }
 
 // 04 - M:N implicit relation ----------------------------------------
 // Article - Tag
 
-model Article {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  tags      Tag[]
-}
+// model Article {
+//   id        Int      @id @default(autoincrement())
+//   title     String
+//   content   String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @default(now()) @updatedAt
+//   tags      Tag[]
+// }
 
-model Tag {
-  id       Int       @id @default(autoincrement())
-  label    String    @unique
-  articles Article[]
-}
+// model Tag {
+//   id       Int       @id @default(autoincrement())
+//   label    String    @unique
+//   articles Article[]
+// }
 
 // // 05 - M:N explicit relation ----------------------------------------
 // Book - Booklist
-model Booklist {
-  id            Int                @id @default(autoincrement())
-  label         String
-  booklistLinks BooklistBookLink[]
+// model Booklist {
+//   id            Int                @id @default(autoincrement())
+//   label         String
+//   booklistLinks BooklistBookLink[]
+// }
+
+// model Book {
+//   id        Int                @id @default(autoincrement())
+//   title     String
+//   isbn      String?
+//   bookLinks BooklistBookLink[]
+// }
+
+// model BooklistBookLink {
+//   book            Book     @relation(fields: [bookId], references: [id])
+//   bookId          Int
+//   booklist        Booklist @relation(fields: [booklistId], references: [id])
+//   booklistId      Int
+//   // additional infos
+//   createdAt       DateTime @default(now())
+//   orderInBooklist Int      @default(0)
+
+//   @@id([bookId, booklistId])
+// }
+
+model Post {
+  id    Int        @id @default(autoincrement())
+  title String
+  tags  PostTags[]
 }
 
-model Book {
-  id        Int                @id @default(autoincrement())
-  title     String
-  isbn      String?
-  bookLinks BooklistBookLink[]
+model PostTags {
+  id     Int   @id @default(autoincrement())
+  post   Post? @relation(fields: [postId], references: [id])
+  tag    Tag?  @relation(fields: [tagId], references: [id])
+  postId Int?
+  tagId  Int?
 }
 
-model BooklistBookLink {
-  book            Book     @relation(fields: [bookId], references: [id])
-  bookId          Int
-  booklist        Booklist @relation(fields: [booklistId], references: [id])
-  booklistId      Int
-  // additional infos
-  createdAt       DateTime @default(now())
-  orderInBooklist Int      @default(0)
-
-  @@id([bookId, booklistId])
+model Tag {
+  id    Int        @id @default(autoincrement())
+  name  String     @unique
+  posts PostTags[]
 }

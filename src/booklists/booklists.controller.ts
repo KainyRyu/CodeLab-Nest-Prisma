@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { Prisma } from '.prisma/client';
 import { BooklistsService } from './booklists.service';
 import { CreateBooklistDto } from './dto/create-booklist.dto';
 import { UpdateBooklistDto } from './dto/update-booklist.dto';
@@ -17,7 +18,9 @@ export class BooklistsController {
 
   @Post()
   create(@Body() createBooklistDto: CreateBooklistDto) {
-    return this.booklistsService.create(createBooklistDto);
+    return this.booklistsService.create({
+      label: createBooklistDto.label,
+    });
   }
 
   @Get()
