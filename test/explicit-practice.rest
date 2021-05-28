@@ -1,0 +1,56 @@
+### GET list ------------------------------------------------------------
+
+### GET all posts
+GET http://localhost:3000/posts HTTP/1.1
+
+
+
+### GET all tags
+GET http://localhost:3000/posts/tags HTTP/1.1
+
+
+
+### GET item ------------------------------------------------------------
+
+### GET a single item
+GET http://localhost:3000/posts/1 HTTP/1.1
+
+
+
+### GET a single tag
+GET http://localhost:3000/posts/tags/8 HTTP/1.1
+
+
+
+### POST ------------------------------------------------------------
+
+### POST post
+POST http://localhost:3000/posts HTTP/1.1
+content-type: application/json
+
+{
+  "title": "My Fav2",
+  "tags": ["a","dkdkdkdk","c"]
+}
+
+
+
+
+### PATCH ------------------------------------------------------------
+
+### PATCH member
+PATCH http://localhost:3000/posts/1 HTTP/1.1
+content-type: application/json
+
+{
+  "tags": ["f","2","c"]
+}
+
+
+### DELETE ------------------------------------------------------------
+
+### DELETE item
+DELETE http://localhost:3000/posts/5 HTTP/1.1
+
+### DELETE tags
+DELETE http://localhost:3000/tags/8 HTTP/1.1
